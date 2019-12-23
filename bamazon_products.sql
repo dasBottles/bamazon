@@ -24,4 +24,4 @@ VALUES
 ('Plates', 'Household Items', 2.5, 10),
 ('Coffee beans', 'Household Items', 2.5, 10)
 ;
-select * from products;
+select * from products WHERE item_id = 1;
