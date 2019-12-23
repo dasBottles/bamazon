@@ -40,8 +40,7 @@ const displayAll = () => {
 
 const productSearch = () => {
     INQUIRER
-        .prompt([
-            {
+        .prompt([{
                 name: 'requestID',
                 type: 'input',
                 message: 'Enter product ID of desired item',
@@ -55,32 +54,30 @@ const productSearch = () => {
             },
         ])
         .then((answer) => {
-         let id = answer.requestID;
-         let quantity = answer.requestQuantity;
-         purchaseItem(id,quantity);
+            let id = answer.requestID;
+            let quantity = answer.requestQuantity;
+            purchaseItem(id, quantity);
         })
 };
 
-const  purchaseItem = (id, quantity) => {
+const purchaseItem = (id, quantity) => {
     let query = `SELECT * FROM products WHERE ?`;
-    CONNECTION.query(query, {
-        item_id: id
-    }), (err, res) => {
+    CONNECTION.query(query, {item_id: id}, (err, res) => {
         if (err) {
             console.log(err);
-        }
-        console.log(JSON.stringify(res));
-    };
+        };
+        console.log(JSON.stringify(res,null ,2));
+    });
 }
 const validateInput = (value) => {
-	let integer = Number.isInteger(parseFloat(value));
-	let sign = Math.sign(value);
+    let integer = Number.isInteger(parseFloat(value));
+    let sign = Math.sign(value);
 
-	if (integer && (sign === 1)) {
-		return true;
-	} else {
-		return 'Please enter a whole non-zero number.';
-	}
+    if (integer && (sign === 1)) {
+        return true;
+    } else {
+        return 'Please enter a whole non-zero number.';
+    }
 };
 
 const customerStart = () => {
@@ -114,12 +111,12 @@ const PurchaseMore = () => {
         type: "confirm",
         name: "reply",
         message: "Would you like to purchase another item?"
-      }]).then(function(answer){
-        if(answer.reply){
-          customerStart();
-        } else{
-          console.log("Have a nice day.");
-          CONNECTION.end();
+    }]).then(function (answer) {
+        if (answer.reply) {
+            customerStart();
+        } else {
+            console.log("Have a nice day.");
+            CONNECTION.end();
         }
-      });
+    });
 }
